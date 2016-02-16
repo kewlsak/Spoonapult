@@ -36,6 +36,14 @@ class SimpleCatapult:
         #Constants
         self.scaleMin = 0
         self.scaleMax = 100
+
+        #All thresholds
+        self.TENSION_MIN = self.scaleMin
+        self.TENSION_MAX = self.scaleMax
+        self.ANGLE_MIN = self.scaleMin
+        self.ANGLE_MAX = self.scaleMax
+        self.YAW_MIN = self.scaleMin
+        self.YAW_MAX = self.scaleMax
         
         #Defaults
         self.tension = 50
