@@ -41,9 +41,18 @@ class TkCatapultControl(Frame):
         Button(self, text=">>", command=self.majorRightYawCallback)\
                               .grid(row=3, column=3)
 
+        #Seperater
+        Label(self).grid(row=4, column=0, columnspan=4)
         
+        #Arm
+        Button(self, text="Arm", command=self.armCallback)\
+                     .grid(row=5, column=0, columnspan=2)
 
-             
+        #Fire
+        Button(self, text="FIRE!", command=self.fireCallback)\
+                     .grid(row=5, column=2, columnspan=2)
+
+    
     def angleCallBack(self, value):
         self.cat.changeAngle(int(value))
 
@@ -65,11 +74,15 @@ class TkCatapultControl(Frame):
     def minorRightYawCallback(self):
         self.cat.changeYaw(self.cat.yaw - self.minor_increment)
        
+    def armCallback(self):
+        self.cat.arm()
 
+    def fireCallback(self):
+        self.cat.fire()
 
 if __name__ == "__main__":
     root = Tk()
-    catapult = SimpleCatapult()
+    catapult = ServoCatapult()
     catapult.DEBUG = True
     control = TkCatapultControl(catapult, root)
     control.pack()
