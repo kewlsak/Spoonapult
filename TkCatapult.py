@@ -1,5 +1,6 @@
 from Tkinter import *
 from Catapult import *
+from ServoCatapult import *
 
 class TkCatapultControl(Frame):
     def __init__(self, catapult, master=None):
@@ -10,50 +11,67 @@ class TkCatapultControl(Frame):
         self.setup()
 
     def setup(self):
-        print("Hello setup")
 
         #Angle
-        self.lblAngle = Label(self, text="Angle")\
-                        .grid(row=0, column=0, columnspan=2)
-        self.sclAngle = Scale(self, to=0, from_=100, command=self.dummy, showval=0)\
-                        .grid(row=1, column=0, columnspan=2)
+        Label(self, text="Angle").grid(row=0, column=0, columnspan=2)
+        sclAngle = Scale(self, from_=self.cat.ANGLE_MIN, to=self.cat.ANGLE_MAX,\
+                              command=self.angleCallBack, showval=0)
+        sclAngle.set(self.cat.angle)
+        sclAngle.grid(row=1, column=0, columnspan=2)
 
         #Tension
-        self.lblTension = Label(self, text="Tension")\
-                          .grid(row=0, column=2, columnspan=2)
-        self.sclTension = Scale(self, to=0, from_=100, command=self.dummy, showval=0)\
-                          .grid(row=1, column=2, columnspan=2)
+        Label(self, text="Tension").grid(row=0, column=2, columnspan=2)
+        sclTension = Scale(self, to=self.cat.TENSION_MIN, from_=self.cat.TENSION_MAX,\
+                                command=self.tensionCallBack, showval=0)
+        sclTension.set(self.cat.tension)
+        sclTension.grid(row=1, column=2, columnspan=2)
 
         #Rotation
-        self.lblYaw = Label(self, text="Rotation")\
-                      .grid(row=2, column=0, columnspan=4)
+        Label(self, text="Rotation").grid(row=2, column=0, columnspan=4)
         #Major Left
-        self.btnYawMajLeft = Button(self, text="<<", command=self.button_dummy)\
-                             .grid(row=3, column=0)
+        Button(self, text="<<", command=self.majorLeftYawCallback)\
+                     .grid(row=3, column=0)
         #Minor Left
-        self.btnYawMinLeft = Button(self, text="<", command=self.button_dummy)\
+        Button(self, text="<", command=self.minorLeftYawCallback)\
                              .grid(row=3, column=1)
         #Minor Right
-        self.btnYawMinRight = Button(self, text=">", command=self.button_dummy)\
+        Button(self, text=">", command=self.minorRightYawCallback)\
                               .grid(row=3, column=2)
         #Major Right
-        self.btnYawMinRight = Button(self, text=">>", command=self.button_dummy)\
+        Button(self, text=">>", command=self.majorRightYawCallback)\
                               .grid(row=3, column=3)
-        
-        
-    def dummy(self, value):
-        self.cat.changeAngle(int(value))
-        print(self.cat.angle)
-        pass
 
-    def button_dummy(self):
-        print("derp")
         
+
+             
+    def angleCallBack(self, value):
+        self.cat.changeAngle(int(value))
+
+    def tensionCallBack(self, value):
+        self.cat.changeTension(int(value))
+
+    major_increment = 10
+    minor_increment = 1
+
+    def majorLeftYawCallback(self):
+        self.cat.changeYaw(self.cat.yaw + self.major_increment)
+
+    def minorLeftYawCallback(self):
+        self.cat.changeYaw(self.cat.yaw + self.minor_increment)
+
+    def majorRightYawCallback(self):
+        self.cat.changeYaw(self.cat.yaw - self.major_increment)
+
+    def minorRightYawCallback(self):
+        self.cat.changeYaw(self.cat.yaw - self.minor_increment)
+       
 
 
 if __name__ == "__main__":
     root = Tk()
-    control = TkCatapultControl(SimpleCatapult(), root)
+    catapult = SimpleCatapult()
+    catapult.DEBUG = True
+    control = TkCatapultControl(catapult, root)
     control.pack()
     root.mainloop()
 
