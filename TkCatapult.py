@@ -1,6 +1,5 @@
 from Tkinter import *
 from Catapult import *
-from ServoCatapult import *
 
 class TkCatapultControl(Frame):
     def __init__(self, catapult, master=None):
@@ -14,17 +13,17 @@ class TkCatapultControl(Frame):
 
         #Angle
         Label(self, text="Angle").grid(row=0, column=0, columnspan=2)
-        sclAngle = Scale(self, from_=self.cat.ANGLE_MIN, to=self.cat.ANGLE_MAX,\
+        self.sclAngle = Scale(self, from_=self.cat.ANGLE_MIN, to=self.cat.ANGLE_MAX,\
                               command=self.angleCallBack, showval=0)
-        sclAngle.set(self.cat.angle)
-        sclAngle.grid(row=1, column=0, columnspan=2)
+        self.sclAngle.set(self.cat.angle)
+        self.sclAngle.grid(row=1, column=0, columnspan=2)
 
         #Tension
         Label(self, text="Tension").grid(row=0, column=2, columnspan=2)
-        sclTension = Scale(self, to=self.cat.TENSION_MIN, from_=self.cat.TENSION_MAX,\
+        self.sclTension = Scale(self, to=self.cat.TENSION_MIN, from_=self.cat.TENSION_MAX,\
                                 command=self.tensionCallBack, showval=0)
-        sclTension.set(self.cat.tension)
-        sclTension.grid(row=1, column=2, columnspan=2)
+        self.sclTension.set(self.cat.tension)
+        self.sclTension.grid(row=1, column=2, columnspan=2)
 
         #Rotation
         Label(self, text="Rotation").grid(row=2, column=0, columnspan=4)
@@ -82,7 +81,7 @@ class TkCatapultControl(Frame):
 
 if __name__ == "__main__":
     root = Tk()
-    catapult = ServoCatapult()
+    catapult = SimpleCatapult()
     catapult.DEBUG = True
     control = TkCatapultControl(catapult, root)
     control.pack()
