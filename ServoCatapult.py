@@ -25,8 +25,8 @@ class ServoCatapult(SimpleCatapult):
         self.TENSION_MAX = 90
         self.ANGLE_MIN = 0
         self.ANGLE_MAX = 50
-        self.YAW_MIN = 0
-        self.YAW_MAX = 100
+        self.YAW_MIN = 12
+        self.YAW_MAX = 79
 
         #Servo presets
         self.NOTENSION = 0
