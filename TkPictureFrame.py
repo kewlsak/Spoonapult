@@ -1,4 +1,4 @@
-from Tkinter import *
+from Tkinter import Tk, Frame, Label
 
 class TkPictureFrame(Frame):
     def __init__(self, master=None):
