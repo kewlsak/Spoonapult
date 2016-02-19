@@ -1,4 +1,4 @@
-from Tkinter import Tk, Frame, Canvas, Checkbutton
+from Tkinter import Tk, Frame, Canvas, Checkbutton, Spinbox
 import picamera
 import io
 import thread
@@ -15,14 +15,23 @@ class TkPictureFrame(Frame):
         #Setup the canvas
         self.picture = Canvas(self, width=x, height=y)
         #Place the canvas in the Grid.
-        self.picture.grid(row=0,column=0)
+        self.picture.grid(row=0,column=0,columnspan=2)
         #Camera check button control.
         self.checkButton = Checkbutton(self, text='Camera?',\
             command=self.toggleCamera)
         #Place it on the grid.
         self.checkButton.grid(row=1,column=0)
+        #Spinbox to set FPS
+        self.fpsSpin = Spinbox(self, text="FPS", from_=2, to=10,\
+            command=self.fpsSpinCallback)
+        self.fpsSpin.grid(row=1, column=1)
+        #Set framerate
+        self.fpsSpinCallback()
         #To determine if the camera is running
         self.capturing = False
+
+    def fpsSpinCallback(self):
+        self.fps = int(self.fpsSpin.get())
 
     def changePic(self, photo):
         #Make a reference to the old photo for removal
@@ -53,6 +62,7 @@ class TkPictureFrame(Frame):
     def setupCamera(self, x, y):
         with picamera.PiCamera() as camera:
             camera.resolution = (x, y)
+            camera.framerate = self.fps
             stream = io.BytesIO()
             for each in camera.capture_continuous(stream, format='jpeg'):
                 # Truncate the stream to the current position (in case
