@@ -2,6 +2,7 @@ from Tkinter import Tk, Frame, Canvas, Checkbutton, Spinbox
 import picamera
 import io
 import thread
+import time
 from PIL import Image, ImageTk
 
 class TkPictureFrame(Frame):
@@ -42,13 +43,34 @@ class TkPictureFrame(Frame):
         self.picture.create_image(self.center,image=self.photo)
         #Remove the old photo
         self.picture.delete(self.oldphoto)
+        #Enable the checkbox
+        self.checkButton.config(state="normal")
 
+
+    def timedDisable(self, widget):
+        #Disable a widget for 2 seconds.
+        widget.config(state="disabled")
+        time.sleep(2)
+        widget.config(state="normal")
+
+    def threadTimeDisable(self, widget):
+        #Run the timed disable in a thread to avoid lockups.
+        thread.start_new_thread(self.timedDisable, (widget,))
 
     def startCamera(self):
+        #Disable the checkbox and fps spinner.
+        self.checkButton.config(state="disabled")
+        self.fpsSpin.config(state="disabled")
+        #Start the camera
         thread.start_new_thread(self.setupCamera, self.resolution)
         self.capturing = True
 
     def stopCamera(self):
+        #Disable the checkbox for a duration.
+        self.threadTimeDisable(self.checkButton)
+        #Enable the spinner.
+        self.fpsSpin.config(state="normal")
+        #Clear the canvas.
         self.capturing = False
         self.picture.delete("all")
         
