@@ -34,15 +34,22 @@ class TkPictureFrame(Frame):
         self.picture.create_image(self.center,image=self.photo)
         #Remove the old photo
         self.picture.delete(self.oldphoto)
-            
+
+
+    def startCamera(self):
+        thread.start_new_thread(self.setupCamera, self.resolution)
+        self.capturing = True
+
+    def stopCamera(self):
+        self.capturing = False
+        self.picture.delete("all")
+        
 
     def toggleCamera(self):
         if self.capturing:
-            self.capturing = False
-            self.picture.delete("all")
+            self.stopCamera()    
         else:
-            thread.start_new_thread(self.setupCamera, self.resolution)
-            self.capturing = True
+            self.startCamera()
 
     def setupCamera(self, x, y):
         with picamera.PiCamera() as camera:
