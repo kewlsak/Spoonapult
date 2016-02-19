@@ -16,14 +16,13 @@ class TkPictureFrame(Frame):
         self.picture = Canvas(self, width=x, height=y)
         #Place the canvas in the Grid.
         self.picture.grid(row=0,column=0)
-
+        #Camera check button control.
         self.checkButton = Checkbutton(self, text='Camera?',\
             command=self.toggleCamera)
+        #Place it on the grid.
         self.checkButton.grid(row=1,column=0)
-
         #To determine if the camera is running
         self.capturing = False
-       
 
     def changePic(self, photo):
         #Make a reference to the old photo for removal
