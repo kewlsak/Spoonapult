@@ -12,5 +12,6 @@ if __name__ == "__main__":
     catapult = ServoCatapult()
     #catapult.DEBUG = True
     control = TkCatapultControl(catapult, root)
+    control.disableYaw()
     control.grid(row=1, column=0)
     root.mainloop()

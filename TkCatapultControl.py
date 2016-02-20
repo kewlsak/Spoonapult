@@ -28,17 +28,17 @@ class TkCatapultControl(Frame):
         #Rotation
         Label(self, text="Rotation").grid(row=2, column=0, columnspan=4)
         #Major Left
-        Button(self, text="<<", command=self.majorLeftYawCallback)\
-                     .grid(row=3, column=0)
+        self.leftMajYaw = Button(self, text="<<", command=self.majorLeftYawCallback)
+        self.leftMajYaw.grid(row=3, column=0)
         #Minor Left
-        Button(self, text="<", command=self.minorLeftYawCallback)\
-                             .grid(row=3, column=1)
+        self.leftMinYaw = Button(self, text="<", command=self.minorLeftYawCallback)
+        self.leftMinYaw.grid(row=3, column=1)
         #Minor Right
-        Button(self, text=">", command=self.minorRightYawCallback)\
-                              .grid(row=3, column=2)
+        self.rightMinYaw = Button(self, text=">", command=self.minorRightYawCallback)
+        self.rightMinYaw.grid(row=3, column=2)
         #Major Right
-        Button(self, text=">>", command=self.majorRightYawCallback)\
-                              .grid(row=3, column=3)
+        self.rightMajYaw = Button(self, text=">>", command=self.majorRightYawCallback)
+        self.rightMajYaw.grid(row=3, column=3)
 
         #Seperater
         Label(self).grid(row=4, column=0, columnspan=4)
@@ -51,6 +51,11 @@ class TkCatapultControl(Frame):
         Button(self, text="FIRE!", command=self.fireCallback)\
                      .grid(row=5, column=2, columnspan=2)
 
+    def disableYaw(self):
+        yaws = [ self.leftMajYaw, self.leftMinYaw,\
+                 self.rightMajYaw, self.rightMinYaw ]
+        for yaw in yaws:
+            yaw.config(state="disabled")
     
     def angleCallBack(self, value):
         self.cat.changeAngle(int(value))
@@ -84,6 +89,7 @@ if __name__ == "__main__":
     catapult = SimpleCatapult()
     catapult.DEBUG = True
     control = TkCatapultControl(catapult, root)
+    control.disableYaw()
     control.pack()
     root.mainloop()
 
