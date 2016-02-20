@@ -44,12 +44,13 @@ class TkCatapultControl(Frame):
         Label(self).grid(row=4, column=0, columnspan=4)
         
         #Arm
-        Button(self, text="Arm", command=self.armCallback)\
-                     .grid(row=5, column=0, columnspan=2)
+        self.btnArm = Button(self, text="Arm", command=self.armCallback)
+        self.btnArm.grid(row=5, column=0, columnspan=2)
 
         #Fire
-        Button(self, text="FIRE!", command=self.fireCallback)\
-                     .grid(row=5, column=2, columnspan=2)
+        self.btnFire = Button(self, text="FIRE!", command=self.fireCallback)
+        self.btnFire.grid(row=5, column=2, columnspan=2)
+        self.btnFire.config(state="disabled")
 
     def disableYaw(self):
         yaws = [ self.leftMajYaw, self.leftMinYaw,\
@@ -79,10 +80,14 @@ class TkCatapultControl(Frame):
         self.cat.changeYaw(self.cat.yaw - self.minor_increment)
        
     def armCallback(self):
+        self.btnArm.config(state="disabled")
         self.cat.arm()
+        self.btnFire.config(state="normal")
 
     def fireCallback(self):
+        self.btnFire.config(state="disabled")
         self.cat.fire()
+        self.btnArm.config(state="normal")
 
 if __name__ == "__main__":
     root = Tk()
