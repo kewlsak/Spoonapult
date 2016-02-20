@@ -23,7 +23,7 @@ class TkPictureFrame(Frame):
         #Place it on the grid.
         self.checkButton.grid(row=1,column=0)
         #Spinbox to set FPS
-        self.fpsSpin = Spinbox(self, text="FPS", from_=2, to=10,\
+        self.fpsSpin = Spinbox(self, text="FPS", from_=2, to=30,\
             command=self.fpsSpinCallback)
         self.fpsSpin.grid(row=1, column=1)
         #Set framerate
