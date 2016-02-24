@@ -1,5 +1,6 @@
 from Tkinter import *
 from Catapult import *
+from ServoCatapult import *
 
 class TkCatapultControl(Frame):
     def __init__(self, catapult, master=None):
@@ -78,7 +79,14 @@ class TkCatapultControl(Frame):
 
     def minorRightYawCallback(self):
         self.cat.changeYaw(self.cat.yaw - self.minor_increment)
-       
+
+    def disableUICallback(self):
+        self.btnArm.config(state="disabled")
+        self.btnFire.config(state="disabled")
+
+    def enableUICallback(self):
+        self.btnArm.config(state="normal")
+    
     def armCallback(self):
         self.btnArm.config(state="disabled")
         self.cat.arm()
@@ -92,8 +100,11 @@ class TkCatapultControl(Frame):
 if __name__ == "__main__":
     root = Tk()
     catapult = SimpleCatapult()
+    #catapult = ServoCatapult()
     catapult.DEBUG = True
     control = TkCatapultControl(catapult, root)
+    #catapult.timedDisarmPreExec = control.disableUICallback #ServoCatapult only
+    #catapult.timedDisarmPostExec = control.enableUICallback #ServoCatapult only
     control.disableYaw()
     control.pack()
     root.mainloop()

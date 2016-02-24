@@ -12,6 +12,8 @@ if __name__ == "__main__":
     catapult = ServoCatapult()
     #catapult.DEBUG = True
     control = TkCatapultControl(catapult, root)
-    control.disableYaw()
+    catapult.timedDisarmPreExec = control.disableUICallback #ServoCatapult only
+    catapult.timedDisarmPostExec = control.enableUICallback #ServoCatapult only
+    control.disableYaw() #Disable rotation UI
     control.grid(row=1, column=0)
     root.mainloop()
