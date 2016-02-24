@@ -50,7 +50,7 @@ class ServoCatapult(SimpleCatapult):
         self.removeLock()
 
         #Timed Disarm Thread
-        seconds = 15
+        seconds = 60
         self.count = seconds * 10
         self.timedDisarmPreExec = None #should be set externally
         self.timedDisarmPostExec = None #should be set externally
