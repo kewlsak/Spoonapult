@@ -92,8 +92,8 @@ class TkPictureFrame(Frame):
                 each.truncate()
                 #Rewind the stream
                 each.seek(0)
-                #Open the image stream and rotate is 180 degrees
-                image = Image.open(each).transpose(Image.ROTATE_180)
+                #Open the image stream
+                image = Image.open(each)
                 photo = ImageTk.PhotoImage(image)
                 #Break out of the loop if not capturing
                 if not self.capturing:
