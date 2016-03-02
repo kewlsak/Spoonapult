@@ -37,6 +37,7 @@ class ServoCatapult(SimpleCatapult):
         self.POST_UNLOCK_WAIT = 0.5
         self.ANGLE_EASE_OFF_WAIT = 0.5
         self.ANGLE_EASE_OFF = 25
+        self.TENSION_REMOVE_WAIT = 1.5
 
         #Defaults
         self.angle = (self.ANGLE_MIN + self.ANGLE_MAX)/2
@@ -99,6 +100,8 @@ class ServoCatapult(SimpleCatapult):
         self.tension_servo.changePositionPercent(self.NOTENSION)
         self.angle = angle
         self.applyAngle()
+        sleep(self.TENSION_REMOVE_WAIT)
+        
 
     #override
     def applyLock(self):
