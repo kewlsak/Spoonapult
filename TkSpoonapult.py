@@ -5,7 +5,7 @@ from ServoCatapult import *
 if __name__ == "__main__":
     root = Tk()
 
-    picture = TkPictureFrame(250, 176, root)
+    picture = TkPictureFrame(300, 250, root)
     picture.grid(row=0, column=0)
     
     #catapult = SimpleCatapult()
