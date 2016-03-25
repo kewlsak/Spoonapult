@@ -65,7 +65,7 @@ class TkCatapultControl(Frame):
     def tensionCallBack(self, value):
         self.cat.changeTension(int(value))
 
-    major_increment = 10
+    major_increment = 4
     minor_increment = 1
 
     def majorLeftYawCallback(self):
